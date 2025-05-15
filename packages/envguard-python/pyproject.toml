@@ -1,6 +1,6 @@
 [project]
 name = "envguard-python"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python utility for robust serverless environment variable validation using Pydantic"
 authors = [
     { name = "EnvGuard Contributors", email = "envguard@example.com" }
@@ -51,10 +51,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/envguard/envguard"
-Documentation = "https://github.com/envguard/envguard/tree/main/packages/envguard-python#readme"
-Repository = "https://github.com/envguard/envguard.git"
-Issues = "https://github.com/envguard/envguard/issues"
+Homepage = "https://github.com/cschanhniem/EnvGuard"
+Documentation = "https://github.com/cschanhniem/EnvGuard/tree/main/packages/envguard-python#readme"
+Repository = "https://github.com/cschanhniem/EnvGuard.git"
+Issues = "https://github.com/cschanhniem/EnvGuard/issues"
 
 [build-system]
 requires = ["hatchling"]
