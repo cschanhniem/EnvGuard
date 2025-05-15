@@ -6,6 +6,7 @@ from typing import Any, Dict
 
 from envguard_python.exceptions import EnvGuardValidationError
 
+
 def test_validation_error_basic() -> None:
     """Test basic error creation and string representation."""
     error = EnvGuardValidationError("Test error")

@@ -13,6 +13,7 @@ from envguard_python.exceptions import EnvGuardValidationError
 
 class TestConfig(BaseModel):
     """Test configuration model."""
+
     DATABASE_URL: str
     API_KEY: str
     DEBUG: bool = False
@@ -20,6 +21,7 @@ class TestConfig(BaseModel):
 
 class ComplexConfig(BaseModel):
     """Test configuration with advanced validations."""
+
     DATABASE_URL: str
     API_KEY: str
     EMAIL: EmailStr
@@ -36,7 +38,6 @@ class ComplexConfig(BaseModel):
 def test_successful_validation(set_env_vars: Dict[str, str]) -> None:
     """Test successful validation of environment variables."""
     config = load_env_or_fail(TestConfig)
-
     assert isinstance(config, TestConfig)
     assert config.DATABASE_URL == set_env_vars["DATABASE_URL"]
     assert config.API_KEY == set_env_vars["API_KEY"]

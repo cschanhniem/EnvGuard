@@ -1,6 +1,6 @@
 [project]
 name = "envguard-python"
-version = "0.1.1"
+version = "0.1.3"
 description = "A Python utility for robust serverless environment variable validation using Pydantic"
 authors = [
     { name = "EnvGuard Contributors", email = "envguard@example.com" }
@@ -71,6 +71,8 @@ include = '\.pyi?$'
 [tool.ruff]
 line-length = 88
 target-version = "py38"
+src = ["src", "tests"]
+fix = true
 
 [tool.ruff.lint]
 select = [
@@ -81,10 +83,13 @@ select = [
     "C",  # flake8-comprehensions
     "B",  # flake8-bugbear
 ]
-ignore = []
+fixable = ["ALL"]
+unfixable = []
 
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+[tool.ruff.lint.isort]
+known-first-party = ["envguard_python"]
+combine-as-imports = true
+lines-after-imports = 2
 
 [tool.pytest.ini_options]
 minversion = "7.0"

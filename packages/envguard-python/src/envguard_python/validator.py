@@ -16,6 +16,7 @@ from envguard_python.types import (
     ValidationModelType,
 )
 
+
 def get_environment_variables() -> EnvDict:
     """
     Get all environment variables as a dictionary.
@@ -24,6 +25,7 @@ def get_environment_variables() -> EnvDict:
         Dict[str, str]: Dictionary of environment variables
     """
     return dict(os.environ)
+
 
 def validate_model(
     model_class: ValidationModelType,
@@ -55,6 +57,7 @@ def validate_model(
             message="Environment variable validation failed",
             errors=errors,
         ) from e
+
 
 def load_env_or_fail(
     schema_model: Type[SupportsEnvironmentValidation],

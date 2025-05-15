@@ -4,10 +4,12 @@ Custom exceptions for EnvGuard.
 
 from typing import Any, Dict, Optional
 
+
 class EnvGuardError(Exception):
     """Base exception for all EnvGuard errors."""
 
     pass
+
 
 class EnvGuardValidationError(EnvGuardError):
     """Raised when environment variable validation fails."""
@@ -42,6 +44,7 @@ class EnvGuardValidationError(EnvGuardError):
             f"- {key}: {value}" for key, value in self.errors.items()
         )
         return f"{base_message}:\n{error_details}"
+
 
 class EnvGuardConfigError(EnvGuardError):
     """Raised when there's an issue with the EnvGuard configuration."""
