@@ -15,7 +15,10 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Required for trusted publishing
+      # Required for OpenID Connect PyPI publishing
+      id-token: write
+      # Required for creating releases
+      contents: write
 
     defaults:
       run:
@@ -48,18 +51,18 @@ jobs:
         repository-url: https://test.pypi.org/legacy/
         packages-dir: packages/envguard-python/dist/
         skip-existing: true
-        verify-metadata: true
         verbose: true
 
     - name: Publish to PyPI
+      # Only publish to PyPI on release event
       if: github.event_name == 'release'
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         packages-dir: packages/envguard-python/dist/
-        verify-metadata: true
         verbose: true
 
     - name: Create GitHub Release
+      # Only create release on workflow_dispatch
       if: github.event_name == 'workflow_dispatch'
       uses: actions/create-release@v1
       env:
