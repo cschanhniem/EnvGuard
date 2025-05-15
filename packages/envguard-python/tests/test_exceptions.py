@@ -13,11 +13,12 @@ def test_validation_error_basic() -> None:
     assert str(error) == "Test error"
     assert error.errors == {}
 
+
 def test_validation_error_with_details() -> None:
     """Test error with detailed validation errors."""
     errors: Dict[str, Any] = {
         "DATABASE_URL": "field required",
-        "PORT": "value is not a valid integer"
+        "PORT": "value is not a valid integer",
     }
     error = EnvGuardValidationError("Validation failed", errors)
 
@@ -30,11 +31,13 @@ def test_validation_error_with_details() -> None:
     assert "DATABASE_URL: field required" in error_str
     assert "PORT: value is not a valid integer" in error_str
 
+
 def test_validation_error_empty_errors() -> None:
     """Test error handling with empty errors dictionary."""
     error = EnvGuardValidationError("Test error", {})
     assert str(error) == "Test error"
     assert error.errors == {}
+
 
 def test_validation_error_none_errors() -> None:
     """Test error handling when errors is None."""
