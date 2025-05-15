@@ -2,7 +2,7 @@
 Custom exceptions for EnvGuard.
 """
 
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 class EnvGuardError(Exception):
     """Base exception for all EnvGuard errors."""

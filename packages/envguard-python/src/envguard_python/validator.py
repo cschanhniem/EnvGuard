@@ -3,9 +3,9 @@ Core validation logic for EnvGuard.
 """
 
 import os
-from typing import Any, Dict, Optional, Type, TypeVar, cast
+from typing import Any, Optional, Type, cast
 
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 
 from envguard_python.exceptions import EnvGuardValidationError
 from envguard_python.types import (
@@ -39,7 +39,7 @@ def validate_model(
         **kwargs: Additional kwargs to pass to Pydantic's model_validate
 
     Returns:
-        Optional[ModelT]: Validated model instance if successful, None if validation fails
+        Optional[ModelT]: Validated model instance if successful
 
     Raises:
         EnvGuardValidationError: If validation fails
@@ -51,7 +51,6 @@ def validate_model(
         for error in e.errors():
             loc = error["loc"][0] if error["loc"] else "unknown"
             errors[str(loc)] = error["msg"]
-        
         raise EnvGuardValidationError(
             message="Environment variable validation failed",
             errors=errors,
@@ -73,25 +72,25 @@ def load_env_or_fail(
         **kwargs: Additional keyword arguments passed to Pydantic's model_validate
 
     Returns:
-        Any: An instance of the schema model populated with validated environment variables
+        An instance of the schema model populated with validated variables
 
     Raises:
         EnvGuardValidationError: If environment variables fail validation
-        
+
     Example:
         ```python
         from pydantic import BaseModel
         from envguard_python import load_env_or_fail
-        
+
         class AppConfig(BaseModel):
             DATABASE_URL: str
             API_KEY: str
             DEBUG: bool = False
             PORT: int = 8000
-            
+
         # Will raise EnvGuardValidationError if validation fails
         config = load_env_or_fail(AppConfig)
-        
+
         # Use the validated config
         print(f"Database URL: {config.DATABASE_URL}")
         print(f"Running in debug mode: {config.DEBUG}")

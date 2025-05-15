@@ -2,7 +2,7 @@
 Tests for custom exceptions.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 from envguard_python.exceptions import EnvGuardValidationError
 
@@ -19,10 +19,10 @@ def test_validation_error_with_details() -> None:
         "PORT": "value is not a valid integer"
     }
     error = EnvGuardValidationError("Validation failed", errors)
-    
+
     # Check error properties
     assert error.errors == errors
-    
+
     # Check string representation
     error_str = str(error)
     assert "Validation failed" in error_str
