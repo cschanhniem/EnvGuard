@@ -5,17 +5,17 @@ This document outlines the development plan for the Node.js implementation of En
 ## Phase 1: Core Implementation
 
 ### Setup & Structure
-- [ ] Initialize package structure in `packages/envguard-node`
-- [ ] Set up TypeScript configuration
-- [ ] Configure build tools (esbuild/tsup)
-- [ ] Set up testing framework (Jest)
-- [ ] Configure ESLint and Prettier
-- [ ] Set up GitHub Actions for Node.js package
+- [x] Initialize package structure in `packages/envguard-node`
+- [x] Set up TypeScript configuration
+- [x] Configure build tools (esbuild/tsup)
+- [x] Set up testing framework (Jest)
+- [x] Configure ESLint and Prettier
+- [x] Set up GitHub Actions for Node.js package
 
 ### Core Features
-- [ ] Design validation API similar to Python version
-- [ ] Implement schema validation using Zod
-- [ ] Create strongly typed error classes
+- [x] Design validation API similar to Python version
+- [x] Implement schema validation using Zod
+- [x] Create strongly typed error classes
 - [ ] Add environment variable loading utilities
 - [ ] Implement fail-fast validation logic
 
