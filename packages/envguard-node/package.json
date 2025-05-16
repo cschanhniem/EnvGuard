@@ -1,5 +1,5 @@
 {
-  "name": "envguard",
+  "name": "@c.s.chanhniem/envguard",
   "version": "0.1.0",
   "description": "A robust environment variable validation library for Node.js",
   "main": "dist/index.js",
@@ -48,7 +48,8 @@
   },
   "homepage": "https://github.com/cschanhniem/EnvGuard/tree/main/packages/envguard-node#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "engines": {
     "node": ">=14.0.0"
