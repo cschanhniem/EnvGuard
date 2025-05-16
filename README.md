@@ -4,6 +4,8 @@
 
 EnvGuard is a powerful, type-safe environment variable validation library designed for both Python and Node.js applications. It ensures your application configuration is correct and complete at startup, preventing common runtime errors and improving overall stability.
 
+**⭐ If you find EnvGuard useful, please consider starring the repository! ⭐**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python CI](https://github.com/cschanhniem/EnvGuard/actions/workflows/python-ci.yml/badge.svg)](https://github.com/cschanhniem/EnvGuard/actions/workflows/python-ci.yml)
 [![Node.js CI](https://github.com/cschanhniem/EnvGuard/actions/workflows/node-ci.yml/badge.svg)](https://github.com/cschanhniem/EnvGuard/actions/workflows/node-ci.yml)
@@ -101,7 +103,7 @@ console.log(`Running with DB: ${config.DATABASE_URL}, Port: ${config.PORT}`);
 
 ## 🤝 Contributing
 
-Contributions are welcome! Whether it's bug reports, feature requests, or code contributions, please check out our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+Contributions are welcome! Whether it's bug reports, feature requests, or code contributions, please check out our [Contributing Guidelines](./CONTRIBUTING.md) to get started. We appreciate your help in making EnvGuard even better!
 
 ## 📜 License
 
@@ -110,3 +112,4 @@ EnvGuard is licensed under the [MIT License](./LICENSE).
 ---
 
 *EnvGuard: Guarding your environment, one variable at a time.*
+**Found EnvGuard helpful? Give us a ⭐ on [GitHub](https://github.com/cschanhniem/EnvGuard)!**
