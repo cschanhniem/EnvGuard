@@ -18,24 +18,34 @@ export function validateSchema<T>(
   envVars: EnvDict,
 ): T {
   try {
-    return schema.parse(envVars);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      const errors: Record<string, string> = {};
-      
-      for (const issue of error.errors) {
-        // Get the field name from the path
-        const path = issue.path[0] ? String(issue.path[0]) : 'unknown';
-        errors[path] = issue.message;
-      }
-      
-      throw new EnvGuardValidationError(
-        'Environment variable validation failed',
-        errors,
-      );
-    }
+    // Use safeParse first to get all validation errors
+    const result = schema.safeParse(envVars);
     
-    throw error;
+    if (result.success) {
+      return result.data;
+    }
+
+    const errors: Record<string, string> = {};
+    for (const issue of result.error.errors) {
+      // Get the field name from the path
+      const path = issue.path[0] ? String(issue.path[0]) : 'unknown';
+      errors[path] = issue.message;
+    }
+
+    throw new EnvGuardValidationError(
+      'Environment variable validation failed',
+      errors,
+    );
+  } catch (error) {
+    if (error instanceof EnvGuardValidationError) {
+      throw error;
+    }
+
+    // Handle unexpected errors
+    throw new EnvGuardValidationError(
+      'Unexpected error during environment validation',
+      { error: error instanceof Error ? error.message : String(error) }
+    );
   }
 }
 
@@ -49,20 +59,14 @@ export function validateSchema<T>(
  * ```typescript
  * import { z } from 'zod';
  * import { loadEnvOrFail } from 'envguard';
- * 
+ *
  * const AppConfig = z.object({
  *   DATABASE_URL: z.string().url(),
  *   API_KEY: z.string().min(1),
- *   DEBUG: z.preprocess(
- *     val => val === 'true',
- *     z.boolean().default(false)
- *   ),
- *   PORT: z.preprocess(
- *     val => val ? parseInt(val, 10) : undefined,
- *     z.number().int().positive().default(8000)
- *   )
+ *   DEBUG: z.coerce.boolean().default(false),
+ *   PORT: z.coerce.number().int().positive().default(8000)
  * });
- * 
+ *
  * // Will throw EnvGuardValidationError if validation fails
  * const config = loadEnvOrFail(AppConfig);
  * ```
@@ -70,4 +74,4 @@ export function validateSchema<T>(
 export function loadEnvOrFail<T>(schema: z.ZodType<T>): T {
   const envVars = getEnvironmentVariables();
   return validateSchema(schema, envVars);
-} 
+}

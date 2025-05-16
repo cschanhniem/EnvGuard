@@ -1,16 +1,15 @@
 /**
- * Environment variable utility functions
+ * Environment variable utilities
  */
 
 /**
- * Type definition for environment variables
+ * Dictionary type for environment variables
  */
 export type EnvDict = Record<string, string | undefined>;
 
 /**
  * Get all environment variables as a dictionary
- * @returns Dictionary of environment variables
  */
 export function getEnvironmentVariables(): EnvDict {
-  return process.env as EnvDict;
-} 
+  return { ...process.env };
+}
