@@ -2,7 +2,7 @@
 
 🛡️ A robust environment variable validation library for Node.js applications.
 
-[![npm version](https://badge.fury.io/js/%40c.s.chanhniem%2Fenvguard.svg)](https://badge.fury.io/js/%40c.s.chanhniem%2Fenvguard)
+[![npm version](https://badge.fury.io/js/%40c-s-chanhniem%2Fenvguard.svg)](https://badge.fury.io/js/%40c-s-chanhniem%2Fenvguard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
@@ -18,20 +18,20 @@
 
 ```bash
 # Using npm
-npm install @c.s.chanhniem/envguard
+npm install @c-s-chanhniem/envguard
 
 # Using yarn
-yarn add @c.s.chanhniem/envguard
+yarn add @c-s-chanhniem/envguard
 
 # Using pnpm
-pnpm add @c.s.chanhniem/envguard
+pnpm add @c-s-chanhniem/envguard
 ```
 
 ## Quick Start
 
 ```typescript
 import { z } from 'zod';
-import { loadEnvOrFail } from '@c.s.chanhniem/envguard';
+import { loadEnvOrFail } from '@c-s-chanhniem/envguard';
 
 // Define your environment schema
 const envSchema = z.object({
@@ -74,7 +74,7 @@ EnvGuard is written in TypeScript and provides excellent type inference:
 
 ```typescript
 import { z } from 'zod';
-import { loadEnvOrFail } from '@c.s.chanhniem/envguard';
+import { loadEnvOrFail } from '@c-s-chanhniem/envguard';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']),
