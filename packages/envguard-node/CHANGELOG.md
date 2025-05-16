@@ -5,6 +5,14 @@ All notable changes to the EnvGuard Node.js package will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-05-16
+
+### Changed
+- Update package name to use official scoped name: `@c.s.chanhniem/envguard`
+- Fix packaging and publishing configuration
+- Update documentation with correct installation instructions
+- Add npm registry configuration
+
 ## [0.1.0] - 2025-05-16
 
 ### Added
@@ -36,4 +44,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Advanced features
   - Contributing guidelines
 
+[0.1.1]: https://github.com/cschanhniem/EnvGuard/releases/tag/v0.1.1
 [0.1.0]: https://github.com/cschanhniem/EnvGuard/releases/tag/v0.1.0
