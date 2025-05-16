@@ -30,6 +30,7 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@c.s.chanhniem'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -47,7 +48,7 @@ jobs:
 
       - name: Publish to NPM
         if: github.event_name == 'release'
-        run: pnpm publish --no-git-checks
+        run: npm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
