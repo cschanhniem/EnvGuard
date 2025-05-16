@@ -1,25 +1,58 @@
 {
-  "name": "envguard-node",
+  "name": "envguard",
   "version": "0.1.0",
-  "description": "EnvGuard for Node.js",
+  "description": "A robust environment variable validation library for Node.js",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx}'"
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepare": "npm run build",
+    "preversion": "npm run lint && npm test",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "envguard",
     "environment",
     "validation",
     "typescript",
-    "node"
+    "node",
+    "serverless",
+    "config",
+    "zod",
+    "type-safe"
   ],
-  "author": "",
+  "author": "EnvGuard Contributors",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cschanhniem/EnvGuard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cschanhniem/EnvGuard/issues"
+  },
+  "homepage": "https://github.com/cschanhniem/EnvGuard/tree/main/packages/envguard-node#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.18",
@@ -36,5 +69,6 @@
   },
   "dependencies": {
     "zod": "^3.24.4"
-  }
+  },
+  "sideEffects": false
 }
