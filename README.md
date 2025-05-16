@@ -1,23 +1,69 @@
 # EnvGuard
 
-[![PyPI version](https://badge.fury.io/py/envguard-python.svg)](https://badge.fury.io/py/envguard-python)
-[![Python Versions](https://img.shields.io/pypi/pyversions/envguard-python.svg)](https://pypi.org/project/envguard-python/)
-[![License](https://img.shields.io/github/license/cschanhniem/EnvGuard.svg)](LICENSE)
+🛡️ **EnvGuard: Robust Environment Variable Validation for Modern Applications**
 
-EnvGuard is a lightweight, multi-language suite of utility libraries designed to help developers validate serverless function environment variables against defined schemas at cold start. The libraries fail fast with clear, structured error messages if validation fails, ensuring functions only run with correct and complete configuration.
+EnvGuard is a powerful, type-safe environment variable validation library designed for both Python and Node.js applications. It ensures your application configuration is correct and complete at startup, preventing common runtime errors and improving overall stability.
 
-## Available Implementations
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python CI](https://github.com/cschanhniem/EnvGuard/actions/workflows/python-ci.yml/badge.svg)](https://github.com/cschanhniem/EnvGuard/actions/workflows/python-ci.yml)
+[![Node.js CI](https://github.com/cschanhniem/EnvGuard/actions/workflows/node-ci.yml/badge.svg)](https://github.com/cschanhniem/EnvGuard/actions/workflows/node-ci.yml)
 
-### 🐍 Python (`envguard-python`)
+## ✨ Key Features
+
+- **Type-Safe Validation**: Leverage powerful schema definitions (Pydantic for Python, Zod for Node.js) to ensure your environment variables match expected types and formats.
+- **Fail-Fast Approach**: Catch configuration issues early in your application lifecycle, preventing unexpected behavior in production.
+- **Clear Error Reporting**: Get detailed, human-readable error messages that pinpoint exactly what's wrong with your environment setup.
+- **Default Values & Coercion**: Easily define default values for optional variables and automatically coerce string inputs to their correct types (e.g., "true" to `True`, "8080" to `8080`).
+- **Cross-Platform Support**: Consistent validation logic and philosophy for both Python and Node.js ecosystems.
+- **Lightweight & Performant**: Designed with performance in mind, especially for serverless environments where cold starts matter.
+
+## 🚀 Supported Languages
+
+### 🐍 Python
+
+The Python version of EnvGuard utilizes Pydantic for schema definition and validation, offering a familiar and robust experience for Python developers.
+
+- **Package**: `envguard-python`
+- **PyPI**: [envguard-python on PyPI](https://pypi.org/project/envguard-python/)
+- **Documentation**: [Python README](./packages/envguard-python/README.md)
+- **Latest Version**: [![PyPI version](https://badge.fury.io/py/envguard-python.svg)](https://badge.fury.io/py/envguard-python)
+
+### 🟢 Node.js
+
+The Node.js version of EnvGuard leverages Zod for schema definition and validation, providing a modern, type-safe solution for JavaScript and TypeScript projects.
+
+- **Package**: `@c.s.chanhniem/envguard`
+- **npm**: [@c.s.chanhniem/envguard on npm](https://www.npmjs.com/package/@c.s.chanhniem/envguard)
+- **Documentation**: [Node.js README](./packages/envguard-node/README.md)
+- **Latest Version**: [![npm version](https://badge.fury.io/js/%40c.s.chanhniem%2Fenvguard.svg)](https://badge.fury.io/js/%40c.s.chanhniem%2Fenvguard)
+
+## 📦 Installation
+
+### Python
 
 ```bash
 pip install envguard-python
 ```
 
-The Python implementation uses Pydantic for robust schema validation and type checking. [View Documentation](packages/envguard-python/README.md)
+### Node.js
+
+```bash
+# Using npm
+npm install @c.s.chanhniem/envguard
+
+# Using yarn
+yarn add @c.s.chanhniem/envguard
+
+# Using pnpm
+pnpm add @c.s.chanhniem/envguard
+```
+
+## 🎯 Quick Start
+
+### Python
 
 ```python
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 from envguard_python import load_env_or_fail
 
 class AppConfig(BaseModel):
@@ -25,50 +71,42 @@ class AppConfig(BaseModel):
     API_KEY: str
     DEBUG: bool = False
     PORT: int = 8000
+    SENTRY_DSN: HttpUrl | None = None
 
 # Will raise EnvGuardValidationError if validation fails
 config = load_env_or_fail(AppConfig)
-```
 
-### 🟨 Node.js (Coming Soon)
-
-Node.js implementation is under development. [View Roadmap](nodejs-todo.md)
-
-## Features
-
-- 🚀 Lightweight and optimized for serverless cold starts
-- 🛡️ Strong type validation using language-specific schema definitions
-- 🔍 Clear, structured error messages for validation failures
-- 💻 Multi-language support (Python available, Node.js coming soon)
-- ⚡ Fast fail-first approach for robust serverless functions
-
-## Platform Support
-
-- AWS Lambda
-- Google Cloud Functions
-- Azure Functions
-- Any serverless environment
-
-## Installation
-
-### Python
-```bash
-pip install envguard-python
+print(f"Running with DB: {config.DATABASE_URL}, Port: {config.PORT}")
 ```
 
 ### Node.js
-Coming soon!
 
-## Documentation
+```typescript
+import { z } from 'zod';
+import { loadEnvOrFail } from '@c.s.chanhniem/envguard';
 
-- [Python Package Documentation](packages/envguard-python/README.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
-- [Node.js Roadmap](nodejs-todo.md)
+const AppConfigSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  API_KEY: z.string().min(1),
+  DEBUG: z.coerce.boolean().default(false),
+  PORT: z.coerce.number().int().positive().default(8080),
+  SENTRY_DSN: z.string().url().optional(),
+});
 
-## Contributing
+// Will throw EnvGuardValidationError if validation fails
+const config = loadEnvOrFail(AppConfigSchema);
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to get involved.
+console.log(`Running with DB: ${config.DATABASE_URL}, Port: ${config.PORT}`);
+```
 
-## License
+## 🤝 Contributing
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Contributions are welcome! Whether it's bug reports, feature requests, or code contributions, please check out our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+
+## 📜 License
+
+EnvGuard is licensed under the [MIT License](./LICENSE).
+
+---
+
+*EnvGuard: Guarding your environment, one variable at a time.*
