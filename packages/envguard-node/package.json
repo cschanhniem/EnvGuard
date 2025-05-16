@@ -1,6 +1,6 @@
 {
   "name": "@c.s.chanhniem/envguard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A robust environment variable validation library for Node.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
