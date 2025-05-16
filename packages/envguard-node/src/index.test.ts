@@ -13,13 +13,17 @@ describe('EnvGuard exports', () => {
 });
 
 describe('loadEnvOrFail integration', () => {
-  const originalEnv = process.env;
+  let originalEnv: NodeJS.ProcessEnv;
 
   beforeEach(() => {
-    process.env = { ...originalEnv };
+    // Store original environment
+    originalEnv = { ...process.env };
+    // Reset environment for each test
+    process.env = {};
   });
 
   afterEach(() => {
+    // Restore original environment
     process.env = originalEnv;
   });
 
@@ -38,6 +42,7 @@ describe('loadEnvOrFail integration', () => {
   });
 
   it('should use default values when variables are not set', () => {
+    // Start with clean environment
     const schema = z.object({
       NODE_ENV: z.enum(['development', 'production']).default('development'),
       PORT: z.coerce.number().default(3000),
@@ -64,5 +69,20 @@ describe('loadEnvOrFail integration', () => {
     });
 
     expect(() => loadEnvOrFail(schema)).toThrow(EnvGuardValidationError);
+  });
+
+  it('should handle mixture of required and optional values', () => {
+    process.env.REQUIRED = 'test';
+
+    const schema = z.object({
+      REQUIRED: z.string(),
+      OPTIONAL: z.string().optional(),
+      DEFAULT: z.string().default('default-value'),
+    });
+
+    const config = loadEnvOrFail(schema);
+    expect(config.REQUIRED).toBe('test');
+    expect(config.OPTIONAL).toBeUndefined();
+    expect(config.DEFAULT).toBe('default-value');
   });
 });

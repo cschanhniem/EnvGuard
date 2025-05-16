@@ -18,27 +18,22 @@ export function validateSchema<T>(
   envVars: EnvDict,
 ): T {
   try {
-    // Use safeParse first to get all validation errors
-    const result = schema.safeParse(envVars);
-    
-    if (result.success) {
-      return result.data;
-    }
-
-    const errors: Record<string, string> = {};
-    for (const issue of result.error.errors) {
-      // Get the field name from the path
-      const path = issue.path[0] ? String(issue.path[0]) : 'unknown';
-      errors[path] = issue.message;
-    }
-
-    throw new EnvGuardValidationError(
-      'Environment variable validation failed',
-      errors,
-    );
+    // Try parsing first
+    return schema.parse(envVars);
   } catch (error) {
-    if (error instanceof EnvGuardValidationError) {
-      throw error;
+    if (error instanceof z.ZodError) {
+      const errors: Record<string, string> = {};
+      
+      for (const issue of error.errors) {
+        // Get the field name from the path
+        const path = issue.path[0] ? String(issue.path[0]) : 'unknown';
+        errors[path] = issue.message;
+      }
+
+      throw new EnvGuardValidationError(
+        'Environment variable validation failed',
+        errors,
+      );
     }
 
     // Handle unexpected errors
